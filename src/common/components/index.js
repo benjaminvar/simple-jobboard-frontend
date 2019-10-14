@@ -1,0 +1,1 @@
+export { default as GoogleRecaptcha } from "./GoogleRecaptcha.vue"
