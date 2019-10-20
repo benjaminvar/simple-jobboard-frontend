@@ -5,7 +5,16 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 col-lg-8 mb-5">
-            <form action="#" class="p-5 bg-white" @submit.prevent="submit">
+            <div v-if="hasSucceed">
+              <div class="alert alert-success">{{message}}</div>
+            </div>
+            <div v-if="hasFailed">
+              <div class="alert alert-danger">{{message}}</div>
+            </div>
+            <div v-if="hasSubmitted && !( hasFailed || hasSucceed)">
+              <div class="alert alert-info">Enviando...</div>
+            </div>
+            <form action="#" class="p-5 bg-white" @submit.prevent="submit" v-if="!hasSubmitted">
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="nombre_completo">Nombre Completo</label>
@@ -92,7 +101,12 @@
               </div>
               <div class="row form-group">
                 <div class="col-md-12">
-                  <GoogleRecaptcha :siteKey="process.env.VUE_APP_GOOGLE_CAPTCHA_CLIENT_ID" @success="captchaSuccess" @expired="captchaFailed" @error="captchaFailed"></GoogleRecaptcha>
+                  <GoogleRecaptcha
+                    :siteKey="siteKey"
+                    @success="captchaSuccess"
+                    @expired="captchaFailed"
+                    @error="captchaFailed"
+                  ></GoogleRecaptcha>
                 </div>
               </div>
 
@@ -132,6 +146,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 import HeroSmall from "./../components/HeroSmall.vue";
 import { phoneNumber } from "@/common/validators";
 import { required, email } from "vuelidate/lib/validators";
@@ -147,14 +162,17 @@ export default {
       email: "",
       telefono: "",
       mensaje: "",
-      captchaToken: null
+      captchaToken: null,
+      hasSubmitted: false,
+      hasSucceed: false,
+      hasFailed: false,
+      message: ""
     };
   },
-  computed:{
-    process: () => process
+  computed: {
+    siteKey: () => process.env.VUE_APP_GOOGLE_CAPTCHA_CLIENT_ID
   },
-  mounted() {
-  },
+  mounted() {},
   validations: {
     nombre_completo: {
       required
@@ -170,21 +188,37 @@ export default {
     mensaje: {
       required
     },
-    captchaToken:{
+    captchaToken: {
       required
     }
   },
   methods: {
-    captchaSuccess(token)
-    {
-        this.captchaToken = token;
+    ...mapActions(["postContactForm"]),
+    captchaSuccess(token) {
+      this.captchaToken = token;
     },
-    captchaFailed(token)
-    {
-        this.captchaToken = token;
+    captchaFailed(token) {
+      this.captchaToken = token;
     },
     submit() {
-      if (this.$v.$invalid) return;
+      if (!this.$v.$invalid) {
+        this.hasSubmitted = true;
+        let data = new FormData();
+        data.append("nombre_completo", this.nombre_completo);
+        data.append("email", this.email);
+        data.append("telefono", this.telefono);
+        data.append("mensaje", this.mensaje);
+        data.append("captchaToken",this.captchaToken);
+        this.postContactForm(data)
+          .then(() => {
+            this.hasSucceed = true;
+            this.message = "Su mensaje ha sido enviado."
+          })
+          .catch(() => {
+            this.hasFailed = true;
+             this.message = "Su mensaje no pudo ser enviado."
+          });
+      }
     }
   }
 };

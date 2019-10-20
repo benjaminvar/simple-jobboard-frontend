@@ -61,6 +61,12 @@ export default new Vuex.Store({
       let url = `${API_BASE_URL}/job/${id}/apply`;
 
       return axios.post(url, params.data);
+    },
+    postContactForm({ctx},data)
+    {
+      let url = `${API_BASE_URL}/contact`;
+      return axios.post(url, data);
     }
+
   }
 })
