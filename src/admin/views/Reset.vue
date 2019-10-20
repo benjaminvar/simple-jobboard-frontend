@@ -12,7 +12,7 @@
       </div>
       <p class="login-box-msg">Olvidaste tu contraseña</p>
 
-      <form method="post" @submit.prevent="submit" v-if="isValidToken">
+      <form method="post" @submit.prevent="submit">
         <div class="form-group has-feedback">
           <input
             type="password"
@@ -78,7 +78,9 @@ export default {
         return {
             password: '',
             password_confirmation: '',
-            isValidToken: false
+            isValidToken: false,
+            hasFailed: false,
+            hasSubmitted: false
 
         }
     },
@@ -99,10 +101,17 @@ export default {
       this.checkPasswordToken(data)
       .then(() => {
         this.isValidToken = true;
-      });
+        this.redirectOrStay();
+      }).catch(() => this.redirectOrStay());
     },
     methods:{
       ...mapActions(["checkPasswordToken","resetPassword"]),
+      redirectOrStay(){
+        if(!this.isValidToken)
+        {
+          this.$router.push({path: "/"});
+        }
+      },
         submit()
         {
             if(!this.$v.$invalid)
@@ -118,7 +127,7 @@ export default {
                 data.append("password_confirmation",this.password_confirmation);
                 this.resetPassword(data)
                 .then(()=>{
-                    this.$route.push({path:"/login",params:{message: "Su contraseña ha sido restablecida."}})
+                    this.$router.push({path:"/login",params:{message: "Su contraseña ha sido restablecida."}})
                     
                 })
                 .catch(() => {
