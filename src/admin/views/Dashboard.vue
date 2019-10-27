@@ -8,13 +8,24 @@
     <div class="content-wrapper">
       
       <section class="content">
-        <router-view></router-view>
+        <transition>
+           <router-view></router-view>
+        </transition>
+       
       </section>
     </div>
     <!-- /.content-wrapper -->
     <FooterBar></FooterBar>
   </div>
 </template>
+<style>
+.v-enter{
+  opacity:0;
+}
+.v-enter-active{
+  transition:all ease-in-out .8s;
+}
+</style>
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
