@@ -28,7 +28,7 @@ So as you might have noticed the project consists of two parts, the backend and 
 
 ### Clone the project
 ```
-git clone https://github.com/benjaminvar/simple-jobboard-backend.git 
+git clone https://github.com/benjaminvar/simple-jobboard-frontend.git
 ```
 
 ### Compiles and hot-reloads for development
