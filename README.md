@@ -31,6 +31,22 @@ So as you might have noticed the project consists of two parts, the backend and 
 git clone https://github.com/benjaminvar/simple-jobboard-frontend.git
 ```
 
+### Set up configuration file
+```
+cp .env.example .env
+```
+
+### Edit settings
+
+Add the corresponding information to the .env file so that the app can work correctly
+```
+VUE_APP_GOOGLE_CAPTCHA_CLIENT_ID=<Your Google Captcha API Client ID>
+VUE_APP_FACEBOOK_CLIENT_ID=<Your Facebook API Client ID>
+VUE_APP_FACEBOOK_CLIENT_REDIRECT_URI=<Your Facebook API Redirect Client URL>
+VUE_APP_GOOGLE_CLIENT_ID=<Your Google API Client ID>
+VUE_APP_GOOGLE_CLIENT_REDIRECT_URI=<Your Google API Redirect Client URL>
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
