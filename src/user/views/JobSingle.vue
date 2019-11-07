@@ -25,14 +25,7 @@
                 </div>
               </div>
 
-              <div class="img-border mb-5">
-                <a href="https://vimeo.com/28959265" class="popup-vimeo image-play">
-                  <span class="icon-wrap">
-                    <span class="icon icon-play"></span>
-                  </span>
-                  <img src="images/hero_2.jpg" alt="Image" class="img-fluid rounded" />
-                </a>
-              </div>
+             
               <div class="mb-3">
                 <h5>Descripci&oacute;n</h5>
                 <div v-html="job.descripcion"></div>
