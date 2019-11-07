@@ -1,8 +1,12 @@
 <template>
   <router-link :to="'/job/' +job.id" class="job-item d-block d-md-flex align-items-center fulltime">
+  <!--
     <div class="company-logo blank-logo text-center text-md-left pl-3">
+      
       <img src="images/logo_1.png" alt="Image" class="img-fluid mx-auto" />
+      
     </div>
+    -->
     <div class="job-details h-100">
       <div class="p-3 align-self-center">
         <h3>{{job.titulo}}</h3>
