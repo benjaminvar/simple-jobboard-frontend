@@ -13,15 +13,15 @@
     "vue-axios": "^2.1.4",
     "vue-notifications": "^1.0.2",
     "vue-router": "^3.0.3",
-    "vue-social-auth": "^1.4.1",
+    "vue-social-auth": "^1.4.9",
     "vue2-filters": "^0.7.2",
     "vuelidate": "^0.7.4",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-service": "^3.10.0",
+    "@vue/cli-service": "^5.0.8",
     "node-sass": "^4.9.0",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^13.2.0",
     "vue-template-compiler": "^2.6.10"
   }
 }
